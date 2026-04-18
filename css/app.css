@@ -3,6 +3,13 @@ html {
     scrollbar-width: none !important;
 }
 
+/* Prevent scrolling while welcome/loading overlay is visible */
+html.is-locked,
+html.is-locked body {
+    overflow: hidden !important;
+    height: 100% !important;
+}
+
 body {
     font-family: 'Poppins', sans-serif !important;
     padding: 0 !important;
@@ -47,9 +54,11 @@ body {
     position: fixed;
     inset: 0 !important;
     width: 100%;
-    height: 100%;
+    height: 100%;          /* fallback */
+    height: 100dvh;        /* mobile: excludes browser chrome */
     background-color: #730237;
     z-index: 1056 !important;
+    touch-action: none;    /* block touch scroll on the overlay itself */
 }
 
 .card-body {
