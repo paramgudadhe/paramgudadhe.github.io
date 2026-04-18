@@ -135,3 +135,46 @@ footer {
 .border {
     border: var(--bs-border-width) var(--bs-border-style) #e2e2e2 !important;
 }
+
+/* ══════════════════════════════════════════════════════
+   GALLERY  —  horizontal snap strip + masonry grid
+   ══════════════════════════════════════════════════════ */
+
+/* ── Horizontal snap strip ─────────────────────────── */
+.gallery-strip {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 0.25rem 1rem 1rem;
+    scrollbar-width: none;
+}
+.gallery-strip::-webkit-scrollbar { display: none; }
+
+.gallery-strip-card {
+    flex: 0 0 62vw;
+    max-width: 260px;
+    scroll-snap-align: center;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 2px solid rgba(255,255,255,0.15);
+}
+.gallery-strip-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 10px 32px rgba(0,0,0,0.65);
+}
+.gallery-strip-card img {
+    width: 100%;
+    height: 72vw;
+    max-height: 320px;
+    object-fit: cover;
+    display: block;
+}
+
+/* ── Masonry 2-col grid ─────────────────────────────── */
+/* (removed) */
+/* ══════════════════════════════════════════════════════ */

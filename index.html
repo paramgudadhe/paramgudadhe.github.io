@@ -380,91 +380,51 @@
     <!-- gallery Foto -->
     <section class="dark-section" id="gallery">
 
-        <div class="container pb-2 pt-4">
-            <div class="card-body border rounded-4 shadow p-3">
-
-                <h1 class="font-esthetic text-center py-3" data-aos="fade-down" data-aos-duration="1500"
-                    style="font-size: 2rem;">Gallery</h1>
-
-                <div id="carousel-foto-satu" data-aos="fade-up" data-aos-duration="1500" class="carousel slide"
-                    data-bs-ride="carousel">
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#carousel-foto-satu" data-bs-slide-to="0" class="active"
-                            aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carousel-foto-satu" data-bs-slide-to="1"
-                            aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carousel-foto-satu" data-bs-slide-to="2"
-                            aria-label="Slide 3"></button>
-                    </div>
-
-                    <div class="carousel-inner rounded-4">
-                        <div class="carousel-item active">
-                            <img src="./assets/gallery/image1.jpg" alt="gambar 1" class="d-block w-100"
-                                onclick="util.modal(this)">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="./assets/gallery/image2.jpg" alt="gambar 2" class="d-block w-100"
-                                onclick="util.modal(this)">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="./assets/gallery/image3.jpg" alt="gambar 3" class="d-block w-100"
-                                onclick="util.modal(this)">
-                        </div>
-                    </div>
-
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel-foto-satu"
-                        data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-
-                    <button class="carousel-control-next" type="button" data-bs-target="#carousel-foto-satu"
-                        data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                </div>
-
-                <div id="carousel-foto-dua" data-aos="fade-up" data-aos-duration="1500" class="carousel slide mt-4"
-                    data-bs-ride="carousel">
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#carousel-foto-dua" data-bs-slide-to="0" class="active"
-                            aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carousel-foto-dua" data-bs-slide-to="1"
-                            aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carousel-foto-dua" data-bs-slide-to="2"
-                            aria-label="Slide 3"></button>
-                    </div>
-
-                    <div class="carousel-inner rounded-4">
-                        <div class="carousel-item active">
-                            <img src="./assets/gallery/image4.jpg" alt="gambar 4" class="d-block w-100"
-                                onclick="util.modal(this)">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="./assets/gallery/image5.jpg" alt="gambar 5" class="d-block w-100"
-                                onclick="util.modal(this)">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="./assets/gallery/image6.jpg" alt="gambar 6" class="d-block w-100"
-                                onclick="util.modal(this)">
-                        </div>
-                    </div>
-
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel-foto-dua"
-                        data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-
-                    <button class="carousel-control-next" type="button" data-bs-target="#carousel-foto-dua"
-                        data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                </div>
-            </div>
+        <div class="pt-4 pb-2">
+            <h1 class="font-esthetic text-center py-3" data-aos="fade-down" data-aos-duration="1500"
+                style="font-size: 2rem;">Gallery</h1>
         </div>
+
+        <!-- Horizontal snap strip -->
+        <div id="gallery-strip" class="gallery-strip" data-aos="fade-up" data-aos-duration="1000"></div>
+
+        <script>
+            // ── Add new filenames here — they appear in the strip automatically
+            const galleryImages = [
+                './assets/gallery/DSC06851.jpeg',
+                './assets/gallery/DSC06864.jpeg',
+                './assets/gallery/DSC06905.jpeg',
+                './assets/gallery/DSC07090.jpeg',
+                './assets/gallery/DSC07212.jpeg',
+                './assets/gallery/DSC07371.jpeg',
+                './assets/gallery/DSC07520.jpeg',
+                './assets/gallery/DSC07554.jpeg',
+                './assets/gallery/DSC07564.jpeg',
+                './assets/gallery/DSC07568.jpeg',
+                './assets/gallery/DSC07621.jpeg',
+                './assets/gallery/DSC07658.jpeg',
+                './assets/gallery/DSC07792.jpeg',
+                './assets/gallery/DSC07804.jpeg',
+                './assets/gallery/DSC07825.jpeg',
+            ];
+
+            (function buildGallery() {
+                const strip = document.getElementById('gallery-strip');
+
+                galleryImages.forEach(function(src, i) {
+                    const card = document.createElement('div');
+                    card.className = 'gallery-strip-card';
+                    const cardImg = document.createElement('img');
+                    cardImg.src = src;
+                    cardImg.alt = 'Photo ' + (i + 1);
+                    cardImg.loading = 'lazy';
+                    card.appendChild(cardImg);
+                    card.addEventListener('click', function() { util.modal(cardImg); });
+                    strip.appendChild(card);
+                });
+            })();
+        </script>
+
     </section>
 
     <!-- Wave Separator -->
