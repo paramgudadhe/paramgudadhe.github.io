@@ -208,7 +208,8 @@ const util = (() => {
     const buka = async (button) => {
         button.disabled = true;
         document.querySelector('body').style.overflowY = 'scroll';
-        document.documentElement.classList.remove('is-locked'); // unlock scroll
+        AOS.init();
+        audio.play();
         AOS.init();
         audio.play();
 
