@@ -75,11 +75,26 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins&display=swap">
 
-    <!-- App -->
-    <link rel="stylesheet" href="./css/app.css">
-    <link rel="stylesheet" href="./css/param.css">
+    <!-- App — bump ?v= number any time you update images, CSS or JS -->
+    <script>const CACHE_VER = '1';</script>
+    <link rel="stylesheet" id="css-app" href="./css/app.css">
+    <link rel="stylesheet" id="css-param" href="./css/param.css">
     <script src="./js/app.js" defer></script>
     <script src="./js/param.js" defer></script>
+    <script>
+        // Append cache-bust version to local CSS and JS so browsers always load fresh files
+        document.addEventListener('DOMContentLoaded', function () {
+            ['css-app', 'css-param'].forEach(function (id) {
+                var el = document.getElementById(id);
+                if (el) el.href = el.href.split('?')[0] + '?v=' + CACHE_VER;
+            });
+            // Bust local images — add any new image IDs here
+            ['img-bg2', 'img-groom', 'img-bride', 'img-welcome'].forEach(function (id) {
+                var el = document.getElementById(id);
+                if (el) el.src = el.src.split('?')[0] + '?v=' + CACHE_VER;
+            });
+        });
+    </script>
 </head>
 
 <!-- <body data-email="user@example.com" data-password="12345678" data-url="https://api.ulems.my.id/" style="overflow-y: hidden;"></body> -->
@@ -136,7 +151,7 @@
 
             <div class="py-4">
                 <div class="img-crop border border-3 border-light shadow mx-auto">
-                    <img src="./assets/images/bg2.jpeg" alt="bg" onclick="util.modal(this)">
+                    <img src="./assets/images/bg2.jpeg" alt="bg" onclick="util.modal(this)" id="img-bg2">
                 </div>
             </div>
 
@@ -204,7 +219,7 @@
 
                 <div data-aos="fade-right" data-aos-duration="2000">
                     <div class="img-crop border border-3 border-light shadow my-4 mx-auto">
-                        <img src="./assets/images/cowo.png" alt="cowo" onclick="util.modal(this)">
+                        <img src="./assets/images/cowo.png" alt="cowo" onclick="util.modal(this)" id="img-groom">
                     </div>
                     <h1 class="font-esthetic" style="font-size: 3rem;">Mangesh</h1>
                     <p class="mt-3 mb-0" style="font-size: 1.25rem;">Son of</p>
@@ -237,7 +252,7 @@
 
                 <div data-aos="fade-left" data-aos-duration="2000">
                     <div class="img-crop border border-3 border-light shadow my-4 mx-auto">
-                        <img src="./assets/images/cewe.png" alt="cewe" onclick="util.modal(this)">
+                        <img src="./assets/images/cewe.png" alt="cewe" onclick="util.modal(this)" id="img-bride">
                     </div>
                     <h1 class="font-esthetic" style="font-size: 3rem;">Pooja</h1>
                     <p class="mt-3 mb-0" style="font-size: 1.25rem;">Daughter of</p>
@@ -414,14 +429,40 @@
                 galleryImages.forEach(function(src, i) {
                     const card = document.createElement('div');
                     card.className = 'gallery-strip-card';
-                    const cardImg = document.createElement('img');
-                    cardImg.src = src;
-                    cardImg.alt = 'Photo ' + (i + 1);
-                    cardImg.loading = 'lazy';
-                    card.appendChild(cardImg);
-                    card.addEventListener('click', function() { util.modal(cardImg); });
+
+                    const img = document.createElement('img');
+                    img.alt = 'Photo ' + (i + 1);
+                    // Use data-src instead of src — images won't load until strip is visible
+                    img.dataset.src = src;
+                    img.className = 'gallery-lazy';
+
+                    card.appendChild(img);
+                    card.addEventListener('click', function() {
+                        // Only open if image has loaded
+                        if (img.src && img.src !== window.location.href) {
+                            util.modal(img);
+                        }
+                    });
                     strip.appendChild(card);
                 });
+
+                // Intersection Observer — load images only when strip scrolls into view
+                const observer = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            strip.querySelectorAll('img.gallery-lazy').forEach(function(img) {
+                                if (img.dataset.src) {
+                                    img.src = img.dataset.src;
+                                    delete img.dataset.src;
+                                    img.classList.remove('gallery-lazy');
+                                }
+                            });
+                            observer.disconnect(); // load once, then stop watching
+                        }
+                    });
+                }, { rootMargin: '200px' });
+
+                observer.observe(strip);
             })();
         </script>
 
@@ -497,7 +538,7 @@
             <h1 class="font-esthetic mb-4" style="font-size: 2.5rem;">The Wedding Of</h1>
 
             <div class="img-crop border border-3 border-light shadow mb-4 mx-auto">
-                <img src="./assets/images/bg-welcome.jpeg" alt="bg">
+                <img src="./assets/images/bg-welcome.jpeg" alt="bg" id="img-welcome">
             </div>
 
             <h1 class="font-esthetic my-4" style="font-size: 2.5rem;">Mangesh and Pooja</h1>
@@ -538,12 +579,16 @@
 
 <!-- Modal Foto Large -->
 <div class="modal fade" id="modal-image" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
-        <div class="modal-content">
-            <div class="modal-body p-0">
-                <div class="d-flex justify-content-center align-items-center" style="height: 100%;">
-                    <img src="./assets/images/bg.jpeg" class="w-100" alt="foto" id="show-modal-image">
-                </div>
+    <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down modal-lg">
+        <div class="modal-content bg-transparent border-0">
+            <div class="modal-body p-0 position-relative">
+                <!-- Close button — always visible, top-right corner -->
+                <button type="button"
+                    class="btn-close btn-close-white position-absolute top-0 end-0 m-2 shadow"
+                    style="z-index:10; background-color: rgba(0,0,0,0.5); border-radius: 50%; padding: 0.6rem;"
+                    data-bs-dismiss="modal" aria-label="Close"></button>
+                <img src="./assets/images/bg.jpeg" class="w-100 rounded-3" alt="foto" id="show-modal-image"
+                    style="max-height: 90vh; object-fit: contain;">
             </div>
         </div>
     </div>

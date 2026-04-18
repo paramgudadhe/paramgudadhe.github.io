@@ -256,7 +256,8 @@ const util = (() => {
 
 const progress = (() => {
 
-    const assets = document.querySelectorAll('img');
+    // Exclude gallery lazy images (no src yet) — they would stall the counter
+    const assets = Array.from(document.querySelectorAll('img')).filter(img => !img.classList.contains('gallery-lazy') && img.src && img.src !== window.location.href);
     const info = document.getElementById('progress-info');
     const bar = document.getElementById('bar');
 
@@ -274,11 +275,17 @@ const progress = (() => {
         }
     };
 
+    if (total === 0) {
+        util.show();
+        return;
+    }
+
     assets.forEach((asset) => {
         if (asset.complete && (asset.naturalWidth !== 0)) {
             progress();
         } else {
             asset.addEventListener('load', () => progress());
+            asset.addEventListener('error', () => progress()); // broken image won't stall either
         }
     });
 })();
