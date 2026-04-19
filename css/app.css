@@ -260,3 +260,7 @@ footer {
 }
 .event-wedding .event-title { color: #f48fb1 !important; }
 /* ══════════════════════════════════════════════════════ */
+
+.events-wrapper {
+    padding: 0 0.25rem;
+}
