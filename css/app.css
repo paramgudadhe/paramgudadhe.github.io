@@ -11,7 +11,7 @@ body {
 }
 
 .font-esthetic {
-    font-family: 'Sacramento', cursive !important;
+    font-family: 'Great Vibes', cursive !important;
     color: #ffffff !important;
 }
 
@@ -177,4 +177,86 @@ footer {
 
 /* ── Masonry 2-col grid ─────────────────────────────── */
 /* (removed) */
+/* ══════════════════════════════════════════════════════ */
+
+/* ══════════════════════════════════════════════════════
+   EVENT CARDS
+   ══════════════════════════════════════════════════════ */
+.event-card {
+    position: relative;
+    border-radius: 1rem;
+    padding: 1rem 1.25rem 1rem 1.5rem;
+    margin: 0 0.5rem;
+    border-left: 4px solid transparent;
+    text-align: left;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.event-card:hover {
+    transform: translateY(-3px);
+}
+
+.event-emoji {
+    font-size: 2rem;
+    margin-bottom: 0.25rem;
+    display: block;
+    animation: event-float 3s ease-in-out infinite;
+}
+
+.event-title {
+    font-size: 2rem !important;
+    margin: 0 0 0.25rem !important;
+}
+
+.event-detail {
+    margin: 0;
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+@keyframes event-float {
+    0%, 100% { transform: translateY(0);      }
+    50%       { transform: translateY(-5px);  }
+}
+
+/* Mehndi — green */
+.event-mehndi {
+    background: linear-gradient(135deg, rgba(34, 85, 34, 0.35), rgba(34, 85, 34, 0.10));
+    border-left-color: #4caf50;
+    box-shadow: 0 4px 20px rgba(76, 175, 80, 0.25);
+}
+.event-mehndi .event-title { color: #81c784 !important; }
+
+/* Sreemanti — saffron/orange */
+.event-sreemanti {
+    background: linear-gradient(135deg, rgba(180, 90, 0, 0.35), rgba(180, 90, 0, 0.10));
+    border-left-color: #ff9800;
+    box-shadow: 0 4px 20px rgba(255, 152, 0, 0.25);
+}
+.event-sreemanti .event-title { color: #ffb74d !important; }
+
+/* Sangit — purple/music */
+.event-sangit {
+    background: linear-gradient(135deg, rgba(100, 30, 140, 0.35), rgba(100, 30, 140, 0.10));
+    border-left-color: #ce93d8;
+    box-shadow: 0 4px 20px rgba(206, 147, 216, 0.25);
+}
+.event-sangit .event-title { color: #ce93d8 !important; }
+
+/* Haldi — yellow */
+.event-haldi {
+    background: linear-gradient(135deg, rgba(180, 150, 0, 0.40), rgba(180, 150, 0, 0.10));
+    border-left-color: #fdd835;
+    box-shadow: 0 4px 20px rgba(253, 216, 53, 0.30);
+}
+.event-haldi .event-title { color: #fff176 !important; }
+
+/* Wedding — gold/red */
+.event-wedding {
+    background: linear-gradient(135deg, rgba(140, 20, 60, 0.45), rgba(180, 130, 0, 0.20));
+    border-left-color: #f48fb1;
+    box-shadow: 0 4px 20px rgba(244, 143, 177, 0.30);
+}
+.event-wedding .event-title { color: #f48fb1 !important; }
 /* ══════════════════════════════════════════════════════ */
